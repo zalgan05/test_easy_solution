@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% block title %} Список товаров {% endblock %}
+
+{% block content %}
+{% include 'includes/switcher.html' %}
+<h1>Список товаров</h1>
+<ul>
+    {% for item in items %}
+        <li>
+            <p>
+            <a href="{% url 'item' pk=item.id %}">{{ item.name }}</a>
+            <p>{{ item.description }}</p>
+            {% if item.item_prices.all %}
+                <h4>Цена:</h4>
+                <ul>
+                    {% for price in item.item_prices.all %}
+                        <li>{{ price.get_display_price }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Цены недоступны</p>
+            {% endif %}
+            <form action="{% url 'add-to-order' item.id %}" method="post">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="1" min="1">
+                <button type="submit">Добавить в корзину</button>
+            </form>
+            </p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

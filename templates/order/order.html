@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+
+{% block stripe %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block title %} Корзина товаров {% endblock %}
+
+{% block content %}
+{% include 'includes/switcher.html' %}
+<h1>Корзина товаров</h1>
+    <ul>
+        {% for order_item in order_items %}
+            <li>
+                {{ order_item.item.name }} - количество: {{ order_item.quantity }}
+                <ul>
+                    {% for price in order_item.item.item_prices.all %}
+                        <li>Цена: {{ price.get_display_price }} - Сумма: {% widthratio  order_item.quantity 1 price.price %}</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'remove-from-order' order_item.id %}">Удалить из корзины</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <form action="{% url 'create-checkout-session-order' %}" method="POST">
+        {% csrf_token %}
+        <label for="currency">Choose currency:</label>
+        <select name="currency" id="currency">
+            {% for currency in currencies %}
+                <option value="{{ currency }}">{{ currency }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Buy</button>
+    </form>
+{% endblock %}

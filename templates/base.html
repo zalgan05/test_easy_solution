@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">          
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block stripe %}{% endblock %}
+    <title>
+      {% block title %}
+        Главная страница
+      {% endblock %}
+    </title>
+  </head>
+  <body>       
+    <main>
+      {% block content %}
+        Контент не подвезли :(
+      {% endblock %}
+    </main>
+  </body>
+</html> 

@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+{% block title %} Спасибо за покупку {% endblock %}
+
+{% block content %}
+<section>
+    <p>
+        Спасибо, что воспользовались нашим магазином
+    </p>
+    <a href="{% url 'item-list' %}">Купить еще</a>
+</section>
+{% endblock %}
